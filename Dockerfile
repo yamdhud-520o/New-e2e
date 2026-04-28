@@ -22,14 +22,8 @@ RUN wget -q https://dl.google.com/linux/direct/google-chrome-stable_current_amd6
     && apt-get install -y ./google-chrome-stable_current_amd64.deb \
     && rm google-chrome-stable_current_amd64.deb
 
-# Install ChromeDriver
-RUN wget -q https://chromedriver.storage.googleapis.com/LATEST_RELEASE \
-    && CHROME_DRIVER_VERSION=$(cat LATEST_RELEASE) \
-    && wget -q "https://chromedriver.storage.googleapis.com/$CHROME_DRIVER_VERSION/chromedriver_linux64.zip" \
-    && unzip chromedriver_linux64.zip \
-    && mv chromedriver /usr/local/bin/chromedriver \
-    && chmod +x /usr/local/bin/chromedriver \
-    && rm chromedriver_linux64.zip LATEST_RELEASE
+# Install ChromeDriver using webdriver-manager (will be installed via pip)
+RUN pip install webdriver-manager
 
 WORKDIR /app
 
@@ -40,4 +34,4 @@ COPY . .
 
 EXPOSE 10000
 
-CMD ["python", "app.py"]
+CMD ["gunicorn", "app:app", "--bind", "0.0.0.0:10000"]
