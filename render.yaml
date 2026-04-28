@@ -1,22 +1,9 @@
 services:
   - type: web
-    name: rk-raja-e2ee
+    name: rk-raja-xwd
     runtime: python
-    buildCommand: |
-      apt-get update
-      apt-get install -y wget curl unzip xvfb libxi6 libgconf-2-4
-      wget -q https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-      apt-get install -y ./google-chrome-stable_current_amd64.deb
-      wget -q https://chromedriver.storage.googleapis.com/LATEST_RELEASE
-      CHROME_DRIVER_VERSION=$(cat LATEST_RELEASE)
-      wget -q "https://chromedriver.storage.googleapis.com/$CHROME_DRIVER_VERSION/chromedriver_linux64.zip"
-      unzip chromedriver_linux64.zip
-      mv chromedriver /usr/local/bin/chromedriver
-      chmod +x /usr/local/bin/chromedriver
-      pip install -r requirements.txt
+    buildCommand: pip install -r requirements.txt
     startCommand: python app.py
     envVars:
-      - key: SECRET_KEY
-        generateValue: true
-      - key: PORT
-        value: 10000
+      - key: PYTHON_VERSION
+        value: 3.11.0
