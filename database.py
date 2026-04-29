@@ -2,8 +2,10 @@
 import sqlite3
 import hashlib
 import os
+import tempfile
 
-DB_PATH = 'users.db'
+# Render.com ke liye - temporary folder mein database banegi
+DB_PATH = os.path.join(tempfile.gettempdir(), 'users.db')
 
 def init_db():
     conn = sqlite3.connect(DB_PATH)
