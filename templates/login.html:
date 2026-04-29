@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RK RAJA - E2EE Automation</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap');
+        
+        * {
+            font-family: 'Outfit', sans-serif !important;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: linear-gradient(136deg, #1a3a1a 0%, #2d4a0e 40%, #1a3a1a 100%);
+            background-attachment: fixed;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            padding: 20px;
+        }
+        
+        .main-header {
+            background: linear-gradient(135deg, #2d2a1a, #3a2e0e, #2d2a1a);
+            border-radius: 25px;
+            padding: 50px 25px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(255, 200, 0, 0.2);
+            border: 1px solid rgba(255, 200, 0, 0.3);
+            margin-bottom: 30px;
+        }
+        
+        .main-header h1 {
+            color: #ffcc00;
+            font-size: 3rem;
+            font-weight: 900;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        
+        .main-header p {
+            color: #ffdd44;
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .tab-btn {
+            flex: 1;
+            padding: 15px;
+            background: #2a2a1a;
+            border: 1px solid #ffcc00;
+            border-radius: 12px;
+            color: #ffcc00;
+            font-weight: 700;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .tab-btn.active {
+            background: #ffcc00;
+            color: #1a3a1a;
+        }
+        
+        .tab-content {
+            display: none;
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(255, 200, 0, 0.2);
+        }
+        
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            color: #ffdd44;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        
+        input {
+            width: 100%;
+            padding: 14px;
+            background: #1a1a0a;
+            border: 1.5px solid #ffcc00;
+            border-radius: 12px;
+            color: #ffdd88;
+            font-size: 1rem;
+            transition: 0.2s ease;
+        }
+        
+        input:focus {
+            outline: none;
+            border-color: #ffaa00;
+            box-shadow: 0 0 12px rgba(255, 200, 0, 0.3);
+        }
+        
+        .btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(140deg, #ffaa00 0%, #ff6600 100%);
+            color: #1a1a0a;
+            font-weight: 700;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: 0.3s ease;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(255, 100, 0, 0.4);
+        }
+        
+        .alert {
+            padding: 12px;
+            border-radius: 8px;
+            margin-top: 15px;
+            display: none;
+        }
+        
+        .alert.success {
+            background: #2a5a2a;
+            color: #aaffaa;
+            display: block;
+        }
+        
+        .alert.error {
+            background: #5a2a2a;
+            color: #ffaaaa;
+            display: block;
+        }
+        
+        .footer {
+            text-align: center;
+            color: #ffcc00;
+            font-weight: 800;
+            margin-top: 2rem;
+            padding: 1.5rem;
+        }
+        
+        h3 {
+            color: #ffcc00;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="main-header">
+            <h1>🦂 RK RAJA XWD</h1>
+            <p>END TO END (E2EE) OFFLINE CONVO SYSTEM</p>
+        </div>
+        
+        <div class="tabs">
+            <div class="tab-btn active" data-tab="login">LOGIN</div>
+            <div class="tab-btn" data-tab="signup">SIGN-UP</div>
+        </div>
+        
+        <div id="login-tab" class="tab-content active">
+            <h3>WELCOME BACK!</h3>
+            <div class="form-group">
+                <label>USERNAME</label>
+                <input type="text" id="login-username" placeholder="Enter your username">
+            </div>
+            <div class="form-group">
+                <label>PASSWORD</label>
+                <input type="password" id="login-password" placeholder="Enter your password">
+            </div>
+            <button class="btn" onclick="login()">LOGIN</button>
+            <div id="login-alert" class="alert"></div>
+        </div>
+        
+        <div id="signup-tab" class="tab-content">
+            <h3>CREATE NEW ACCOUNT</h3>
+            <div class="form-group">
+                <label>CHOOSE USERNAME</label>
+                <input type="text" id="signup-username" placeholder="Choose a unique username">
+            </div>
+            <div class="form-group">
+                <label>CHOOSE PASSWORD</label>
+                <input type="password" id="signup-password" placeholder="Create a strong password">
+            </div>
+            <div class="form-group">
+                <label>CONFIRM PASSWORD</label>
+                <input type="password" id="confirm-password" placeholder="Re-enter your password">
+            </div>
+            <button class="btn" onclick="signup()">CREATE ACCOUNT</button>
+            <div id="signup-alert" class="alert"></div>
+        </div>
+        
+        <div class="footer">MADE IN INDIA 🇮🇳 WP+917291868271</div>
+    </div>
+    
+    <script>
+        // Tab switching
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const tab = btn.dataset.tab;
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+                document.getElementById(`${tab}-tab`).classList.add('active');
+            });
+        });
+        
+        async function login() {
+            const username = document.getElementById('login-username').value;
+            const password = document.getElementById('login-password').value;
+            const alertDiv = document.getElementById('login-alert');
+            
+            if (!username || !password) {
+                alertDiv.textContent = '⚠️ PLEASE ENTER BOTH USERNAME AND PASSWORD';
+                alertDiv.className = 'alert error';
+                return;
+            }
+            
+            const response = await fetch('/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username, password })
+            });
+            
+            const data = await response.json();
+            
+            if (data.success) {
+                window.location.href = '/dashboard';
+            } else {
+                alertDiv.textContent = '❌ ' + (data.message || 'INVALID CREDENTIALS');
+                alertDiv.className = 'alert error';
+            }
+        }
+        
+        async function signup() {
+            const username = document.getElementById('signup-username').value;
+            const password = document.getElementById('signup-password').value;
+            const confirmPassword = document.getElementById('confirm-password').value;
+            const alertDiv = document.getElementById('signup-alert');
+            
+            if (!username || !password || !confirmPassword) {
+                alertDiv.textContent = '⚠️ PLEASE FILL ALL FIELDS';
+                alertDiv.className = 'alert error';
+                return;
+            }
+            
+            if (password !== confirmPassword) {
+                alertDiv.textContent = '❌ PASSWORDS DO NOT MATCH';
+                alertDiv.className = 'alert error';
+                return;
+            }
+            
+            const response = await fetch('/signup', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username, password, confirm_password: confirmPassword })
+            });
+            
+            const data = await response.json();
+            
+            if (data.success) {
+                alertDiv.textContent = '✅ ' + data.message + ' PLEASE LOGIN NOW!';
+                alertDiv.className = 'alert success';
+                
+                setTimeout(() => {
+                    window.location.href = '/';
+                }, 2000);
+            } else {
+                alertDiv.textContent = '❌ ' + data.message;
+                alertDiv.className = 'alert error';
+            }
+        }
+    </script>
+</body>
+</html>
